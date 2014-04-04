@@ -428,21 +428,21 @@
 			},
 
 			initiateClickListeners: function() {
-				$(document).on('click',jP.options.trigger,function(){ jP.triggerMenu(jP.options.animated); return false; });
+				$(jP.options.trigger).bind('click',function(){ jP.triggerMenu(jP.options.animated); return false; });
 			},
 
 			destroyClickListeners: function() {
-				$(document).off('click',jP.options.trigger,null);
+				$(jP.options.trigger).unbind('click',null);
 			},
 
 			initiateContentClickListeners: function() {
 				if ( !jP.options.closeOnContentClick ) return false;
 
-				$(document).on('click',jP.panel,function(e){
+				$(jP.panel).live('click',function(e){
 					if ( jP.menuIsOpen() ) jP.closeMenu(jP.options.animated);
 				});
 				
-				$(document).on('touchend',jP.panel,function(e){
+				$(jP.panel).live('touchend',jP.panel,function(e){
 					if ( jP.menuIsOpen() ) jP.closeMenu(jP.options.animated);
 				});
 			},
@@ -450,13 +450,13 @@
 			destroyContentClickListeners: function() {
 				if ( !jP.options.closeOnContentClick ) return false;
 
-				$(document).off('click',jP.panel,null);
-				$(document).off('touchend',jP.panel,null);
+				$(jP.panel).unbind('click',null);
+				$(jP.panel).unbind('touchend',null);
 			},
 
 			initiateKeyboardListeners: function() {
 				var preventKeyListeners = ['input', 'textarea'];
-				$(document).on('keydown',function(e){
+				$(document).live('keydown',function(e){
 					var target = $(e.target),
 					prevent = false;
 					$.each(preventKeyListeners, function(){
@@ -480,7 +480,7 @@
 			},
 
 			destroyKeyboardListeners: function() {
-				$(document).off('keydown',null);
+				$(document).unbind('keydown',null);
 			},
 
 			setupMarkup: function() {
